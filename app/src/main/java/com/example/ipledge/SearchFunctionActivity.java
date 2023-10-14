@@ -62,7 +62,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
 
         // setting array adapter, which sets the information displayed in the searchview
         arrayAdapter = new ArrayAdapter<>
-                (this, R.layout.list_item, R.id.plantNameTextView, plantName);
+                (this, R.layout.list_item, plantName);
 
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,7 +134,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
         });
     }
     private void showData() {
-        adapter = new Adapter(this, storeName, plantName, plantPrice, plantURL);
+        adapter = new Adapter(this, plantURL);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
