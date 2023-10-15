@@ -19,11 +19,12 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     LayoutInflater inflater;
-    List<String> companyName, companyRating, photoURL;
+    List<String> companyEmissions, companyName, companyRating, photoURL;
 
-    public Adapter(Context context, List<String> companyName,
+    public Adapter(Context context, List<String> companyEmissions, List<String> companyName,
                    List<String> companyRating, List<String> companyURL){
         this.inflater= LayoutInflater.from(context);
+        this.companyEmissions = companyEmissions;
         this.companyName = companyName;
         this.companyRating = companyRating;
         this.photoURL = companyURL;
@@ -40,11 +41,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String emissions = companyEmissions.get(position);
         String rating = companyRating.get(position);
         String url = photoURL.get(position);
 
         // load text into individual textViews
         holder.rating.setText(rating);
+        holder.emissions.setText(emissions);
 
         // load picture into imageView for the picture
 //        Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(holder.image);
@@ -59,9 +62,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView rating;
+        TextView emissions;
         ImageView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            emissions = itemView.findViewById(R.id.emissionsTextView);
             rating = itemView.findViewById(R.id.ratingTextView);
             image = itemView.findViewById(R.id.pictureOfCompany);
         }
