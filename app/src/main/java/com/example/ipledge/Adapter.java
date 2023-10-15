@@ -19,11 +19,14 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     LayoutInflater inflater;
-    List<String> plantURL;
+    List<String> companyName, companyRating, photoURL;
 
-    public Adapter(Context context, List<String> plantURL){
+    public Adapter(Context context, List<String> companyName,
+                   List<String> companyRating, List<String> companyURL){
         this.inflater= LayoutInflater.from(context);
-        this.plantURL = plantURL;
+        this.companyName = companyName;
+        this.companyRating = companyRating;
+        this.photoURL = companyURL;
 
 //        Log.d("TAG", "Adapter: " + plantName);
     }
@@ -37,26 +40,29 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String plantUrl = plantURL.get(position);
+        String rating = companyRating.get(position);
+        String url = photoURL.get(position);
 
         // load text into individual textViews
+        holder.rating.setText(rating);
 
         // load picture into imageView for the picture
 //        Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(holder.image);
-        Picasso.get().load(plantUrl).into(holder.image);
+        Picasso.get().load(url).into(holder.image);
 
     }
 
     @Override
     public int getItemCount() {
-        return plantURL.size();
+        return photoURL.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView store, plant, price;
+        TextView rating;
         ImageView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            rating = itemView.findViewById(R.id.ratingTextView);
             image = itemView.findViewById(R.id.pictureOfCompany);
         }
     }
