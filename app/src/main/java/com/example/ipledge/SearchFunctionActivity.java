@@ -46,7 +46,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
     Adapter adapter;
     AsyncHttpClient client;
     Workbook workbook;
-    List<String> companyName, companyRating, companyURL;
+    List<String> companyEmissions, companyName, companyRating, companyURL;
 
 
     @Override
@@ -76,6 +76,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
                 // clear recyclerview
                 recyclerView.setAdapter(null);
                 // clear arraylists
+                companyEmissions.clear();
                 companyName.clear();
                 companyRating.clear();
                 companyURL.clear();
@@ -87,9 +88,10 @@ public class SearchFunctionActivity extends AppCompatActivity {
     }
     private void addData(CharSequence charSequence) {
         // code for excel spreadsheet information
-        String url = "https://github.com/brindamoudgalya/MoonGate/blob/master/MoonGateFinalSheet.xls?raw=true";
+        String url = "https://github.com/brindamoudgalya/iPledge/raw/main/FINALCOMPANYSUSTAINABILITYDATA.xls";
         recyclerView = findViewById(R.id.recyclerView);
 
+        companyEmissions = new ArrayList<>();
         companyName = new ArrayList<>();
         companyRating = new ArrayList<>();
         companyURL = new ArrayList<>();
@@ -115,10 +117,10 @@ public class SearchFunctionActivity extends AppCompatActivity {
                         for (int i = 0; i < sheet.getRows(); i++) {
                             Cell[] row = sheet.getRow(i);
                             if (row[0].getContents().toLowerCase(Locale.ROOT).contains(charSequence)
-                                    || row[1].getContents().toLowerCase(Locale.ROOT).contains(charSequence)
-                                    || row[2].getContents().toLowerCase(Locale.ROOT).startsWith("$" + charSequence)) {
+                                    || row[1].getContents().toLowerCase(Locale.ROOT).contains(charSequence)) {
+                                companyRating.add(row[0].getContents() + "/5");
                                 companyName.add(row[1].getContents());
-                                companyRating.add(row[0].getContents());
+                                companyEmissions.add(row[4].getContents());
                                 companyURL.add(row[13].getContents());
                             }
                         }
@@ -133,7 +135,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
         });
     }
     private void showData() {
-        adapter = new Adapter(this, companyName, companyRating, companyURL);
+        adapter = new Adapter(this, companyEmissions, companyName, companyRating, companyURL);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
