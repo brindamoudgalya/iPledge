@@ -118,7 +118,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
                                     || row[1].getContents().toLowerCase(Locale.ROOT).contains(charSequence)) {
                                 companyRating.add(row[0].getContents() + "/5");
                                 companyName.add(row[1].getContents());
-                                companyEmissions.add(row[4].getContents());
+                                companyEmissions.add("Emissions: \n" + row[4].getContents());
                                 companyURL.add(row[13].getContents());
                             }
                         }
