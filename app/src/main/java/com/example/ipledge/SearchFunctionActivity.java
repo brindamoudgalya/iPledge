@@ -44,7 +44,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
     Adapter adapter;
     AsyncHttpClient client;
     Workbook workbook;
-    List<String> storeName, plantName, plantPrice, plantURL;
+    List<String> companyName, companyRating, companyURL;
 
 
     @Override
@@ -62,7 +62,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
 
         // setting array adapter, which sets the information displayed in the searchview
         arrayAdapter = new ArrayAdapter<>
-                (this, R.layout.list_item, plantName);
+                (this, R.layout.list_item, companyName);
 
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,10 +74,9 @@ public class SearchFunctionActivity extends AppCompatActivity {
                 // clear recyclerview
                 recyclerView.setAdapter(null);
                 // clear arraylists
-                storeName.clear();
-                plantName.clear();
-                plantPrice.clear();
-                plantURL.clear();
+                companyName.clear();
+                companyRating.clear();
+                companyURL.clear();
                 addData(charSequence);
             }
             @Override
@@ -89,10 +88,9 @@ public class SearchFunctionActivity extends AppCompatActivity {
         String url = "https://github.com/brindamoudgalya/MoonGate/blob/master/MoonGateFinalSheet.xls?raw=true";
         recyclerView = findViewById(R.id.recyclerView);
 
-        storeName = new ArrayList<>();
-        plantName = new ArrayList<>();
-        plantPrice = new ArrayList<>();
-        plantURL = new ArrayList<>();
+        companyName = new ArrayList<>();
+        companyRating = new ArrayList<>();
+        companyURL = new ArrayList<>();
 
         client = new AsyncHttpClient();
         progressBar.setVisibility(View.VISIBLE);
@@ -117,10 +115,9 @@ public class SearchFunctionActivity extends AppCompatActivity {
                             if (row[0].getContents().toLowerCase(Locale.ROOT).contains(charSequence)
                                     || row[1].getContents().toLowerCase(Locale.ROOT).contains(charSequence)
                                     || row[2].getContents().toLowerCase(Locale.ROOT).startsWith("$" + charSequence)) {
-                                storeName.add(row[0].getContents());
-                                plantName.add(row[1].getContents());
-                                plantPrice.add(row[2].getContents());
-                                plantURL.add(row[3].getContents());
+                                companyName.add(row[1].getContents());
+                                companyRating.add(row[0].getContents());
+                                companyURL.add(row[13].getContents());
                             }
                         }
 
@@ -134,7 +131,7 @@ public class SearchFunctionActivity extends AppCompatActivity {
         });
     }
     private void showData() {
-        adapter = new Adapter(this, plantURL);
+        adapter = new Adapter(this, companyName, companyRating, companyURL);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
